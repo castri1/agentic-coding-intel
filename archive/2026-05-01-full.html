@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2026-05-01 — Radar completo</title><style>body{font-family:system-ui,sans-serif;max-width:980px;margin:40px auto;padding:0 20px;line-height:1.6;background:#070912;color:#edf3ff}a{color:#67e8f9}code{background:#101725;padding:2px 6px;border-radius:6px}table{width:100%;border-collapse:collapse;margin:16px 0}td,th{border:1px solid #263247;padding:8px;vertical-align:top}th{color:#c4b5fd}section{border:1px solid #263247;border-radius:16px;padding:18px;margin:16px 0;background:#101725}</style></head><body>
+<p><a href="../index.html">← Volver</a></p>
+<h1>2026-05-01 — Radar completo Claude Code &amp; OpenAI Codex</h1>
+<h2>Resumen ejecutivo</h2>
+<p>Hoy el mapa de agentic coding se está consolidando alrededor de dos líneas claras:</p>
+<p>1. **Claude Code** está empujando fuerte hacia una plataforma completa: CLI, IDEs, desktop, web, mobile/remote-control, Agent SDK, plugins, skills, hooks, subagents, MCP, computer use, routines/scheduled tasks y revisiones cloud como /ultrareview.</p>
+<p>2. **OpenAI Codex** acaba de publicar 0.128.0 como release estable reciente, con 0.129.0-alpha.2 ya disponible hoy en npm/GitHub. El foco nuevo de Codex está en /goal workflows persistentes, app-server APIs, perfiles explícitos de permisos/sandbox, plugins, hooks, imports de agentes externos, MultiAgentV2 y memoria/instrucciones ad-hoc.</p>
+<p>3. **La práctica recomendada cambia:** ya no basta con “abrir un agente y pedirle código”. Lo más productivo es diseñar workflows: plan -&gt; ejecución aislada -&gt; review -&gt; merge, con reglas versionadas (CLAUDE.md, AGENTS.md, skills), hooks de validación, permisos explícitos, MCP limitado y worktrees paralelos.</p>
+<h2>Versiones y releases verificados</h2>
+<table>
+<tr><th>Herramienta</th><th>Estado observado</th><th>Qué significa</th><th>Fuente</th></tr>
+<tr><td>Claude Code</td><td>npm @anthropic-ai/claude-code latest/next 2.1.126, stable 2.1.118; paquete modificado 2026-05-01T02:04:55Z</td><td>El canal latest va por delante del stable. Para equipos conservadores conviene Homebrew stable o claude install stable; para investigación usar latest.</td><td>npm @anthropic-ai/claude-code</td></tr>
+<tr><td>Claude Code docs</td><td>docs oficiales exponen CLI, desktop, web, Chrome, computer use, Agent SDK, plugins, hooks, skills, subagents, MCP, routines y weekly “What&#x27;s New”</td><td>Claude Code debe tratarse como plataforma agentic, no solo CLI.</td><td><a href="https://code.claude.com/docs/llms.txt">https://code.claude.com/docs/llms.txt</a></td></tr>
+<tr><td>OpenAI Codex</td><td>npm @openai/codex latest 0.128.0; alpha 0.129.0-alpha.2 publicada 2026-05-01T13:36Z</td><td>Hay release estable fuerte y una alpha del mismo día.</td><td>npm @openai/codex, GitHub releases</td></tr>
+<tr><td>OpenAI Codex repo</td><td>openai/codex: ~79k estrellas, ~11k forks, actualizado 2026-05-01</td><td>Comunidad y ritmo de cambio muy altos.</td><td>GitHub repo API</td></tr>
+<tr><td>Codex 0.128.0</td><td>Release estable publicado 2026-04-30</td><td>Introduce /goal, perfiles de permisos, mejoras de plugins/hooks, MultiAgentV2, app-server, TUI y update command.</td><td><a href="https://github.com/openai/codex/releases/tag/rust-v0.128.0">https://github.com/openai/codex/releases/tag/rust-v0.128.0</a></td></tr>
+<tr><td>Codex 0.129.0-alpha.2</td><td>Alpha publicada 2026-05-01</td><td>Señal de desarrollo activo; usar solo para pruebas.</td><td><a href="https://github.com/openai/codex/releases/tag/rust-v0.129.0-alpha.2">https://github.com/openai/codex/releases/tag/rust-v0.129.0-alpha.2</a></td></tr>
+</table>
+<h2>Hallazgos clave de Claude Code</h2>
+<h3>Plataforma y superficies</h3>
+<p>Claude Code ya no es solo terminal. Las fuentes oficiales listan: terminal CLI, VS Code, JetBrains, desktop app, web, Chrome extension beta, computer use preview, Slack, GitHub Actions, GitLab CI/CD, Bedrock, Vertex AI, Microsoft Foundry, remote control, scheduled tasks/routines y Agent SDK.</p>
+<p>**Insight:** si el objetivo es productividad real, conviene elegir la superficie por tipo de trabajo:</p>
+<ul>
+<li>CLI: refactors locales, debugging, tareas con repo grande.</li>
+<li>Desktop/web: planificación, ejecución aislada, sesiones paralelas, PRs cloud.</li>
+<li>IDE: diffs inline y navegación de contexto.</li>
+<li>SDK: construir agentes internos y automatizaciones programáticas.</li>
+<li>Slack/GitHub/GitLab: delegación desde flujos de equipo.</li>
+</ul>
+<h3>Skills y comandos convergen</h3>
+<p>La documentación actual dice que **custom commands se han fusionado con skills**. Un .claude/commands/deploy.md y un .claude/skills/deploy/SKILL.md pueden crear /deploy; las skills agregan frontmatter, supporting files, control de invocación, carga bajo demanda, subagent execution y dynamic context injection.</p>
+<p>**Tip:** convierte comandos repetidos en skills cuando tengan playbook, checklist, archivos de soporte o lógica multi-paso. Mantén CLAUDE.md para hechos estables; skills para procedimientos.</p>
+<h3>Bundled skills y comandos útiles</h3>
+<p>Docs actuales mencionan bundled skills como /simplify, /batch, /debug, /loop y /claude-api. Además, el mapa de docs destaca /ultrareview, /autofix-pr, /team-onboarding, /usage, /context, /hooks, /mcp, /agents, /compact, /plan, /review y /security-review.</p>
+<p>**Workflow recomendado:**</p>
+<p>1. /context antes de tareas largas.</p>
+<p>2. /plan o /ultraplan para cambios grandes.</p>
+<p>3. Ejecutar en worktree o sesión aislada.</p>
+<p>4. /review, /security-review o /ultrareview antes de merge.</p>
+<p>5. /compact al 70–85% de contexto.</p>
+<h3>Hooks mucho más potentes</h3>
+<p>La referencia actual de hooks incluye eventos mucho más amplios que el patrón clásico PreToolUse/PostToolUse/Stop. Aparecen eventos como SessionStart, Setup, InstructionsLoaded, UserPromptSubmit, UserPromptExpansion, PreToolUse, PermissionRequest, PostToolUse, PostToolUseFailure, PostToolBatch, PermissionDenied, Notification, SubagentStart, SubagentStop, TaskCreated, TaskCompleted, Stop, StopFailure, TeammateIdle, ConfigChange, CwdChanged, FileChanged, WorktreeCreate, WorktreeRemove, PreCompact, PostCompact, SessionEnd, Elicitation, ElicitationResult.</p>
+<p>**Tip accionable:** usa hooks para políticas determinísticas, no para “pedirle al modelo que se acuerde”. Ejemplos:</p>
+<ul>
+<li>PreToolUse: bloquear rm -rf, git push --force, acceso a .env.</li>
+<li>PostToolUse: correr formatter/linter tras editar archivos.</li>
+<li>SessionStart: cargar estado de git, rama, ticket actual.</li>
+<li>PreCompact: guardar resumen o snapshot.</li>
+<li>FileChanged: ejecutar tests focalizados.</li>
+</ul>
+<h3>Agent SDK como framework</h3>
+<p>El llms.txt oficial de Claude Code lista Agent SDK con Python/TypeScript, custom tools, MCP, permissions, plugins, skills, subagents, structured outputs, streaming input/output, sessions, checkpointing, OpenTelemetry y hosting.</p>
+<p>**Framework mental:** Claude Code sirve como librería para construir agentes internos con las mismas capacidades del CLI: tools, permisos, memoria/proyecto, skills y observabilidad.</p>
+<h3>Novedades recientes del “What&#x27;s New” de Claude Code</h3>
+<p>Últimos weekly digests visibles en docs:</p>
+<ul>
+<li>Week 13 (Mar 23–27): auto mode, computer use built-in, PR auto-fix cloud, transcript search, PowerShell tool Windows.</li>
+<li>Week 14 (Mar 30–Apr 3): computer use in CLI, lessons, flicker-free rendering, per-tool MCP result-size overrides, plugin executables on PATH.</li>
+<li>Week 15 (Apr 6–10): Ultraplan, Monitor tool con self-pacing /loop, /team-onboarding, /autofix-pr desde terminal.</li>
+<li>Week 16 (Apr 13–17): Opus 4.7 con xhigh effort, Routines en web, /ultrareview, /usage breakdown, native binaries reemplazando JS bundled.</li>
+<li>Week 17 (Apr 20–24): /ultrareview research preview, session recaps automáticos, custom color themes en plugins, rediseño web.</li>
+</ul>
+<h2>Hallazgos clave de OpenAI Codex</h2>
+<h3>Release 0.128.0: lo importante</h3>
+<p>El release 0.128.0 trae cambios grandes:</p>
+<table>
+<tr><th>Área</th><th>Hallazgo</th><th>Por qué importa</th><th>Cómo probar/monitorear</th></tr>
+<tr><td>Goals</td><td>Persisted /goal workflows con APIs de app-server, model tools, continuación runtime y controles TUI para crear/pausar/reanudar/limpiar</td><td>Convierte tareas largas en objetivos persistentes, no solo chats efímeros.</td><td>Probar /goal en TUI; revisar issues actuales sobre goal failures.</td></tr>
+<tr><td>CLI/TUI</td><td>codex update, keymaps configurables, nudges de plan-mode, terminal title “action required”, /statusline y /title durante turnos activos</td><td>Mejor operabilidad en sesiones largas.</td><td>codex update; configurar keymaps; usar /statusline.</td></tr>
+<tr><td>Permisos</td><td>Perfiles de permisos built-in, selección de sandbox por CLI, cwd controls, active-profile metadata</td><td>Codex se mueve de --full-auto a perfiles explícitos.</td><td>Migrar scripts a perfiles de permisos; evitar depender de --full-auto.</td></tr>
+<tr><td>Plugins</td><td>Marketplace install, remote bundle caching, uninstall remoto, hooks empaquetados, estado persistido de hooks, import externo de config agent</td><td>Los plugins se vuelven mecanismo central de extensión.</td><td>Probar /plugins; revisar hooks incluidos por plugins.</td></tr>
+<tr><td>External agents</td><td>Import de sesiones de agentes externos, imports en background y títulos importados</td><td>Señal de ecosistema multi-agente e interoperabilidad.</td><td>Revisar flujos de import y app-server.</td></tr>
+<tr><td>MultiAgentV2</td><td>thread caps, wait-time controls, root/subagent hints, v2-specific depth handling</td><td>Codex avanza hacia equipos de agentes más controlables.</td><td>Probar subagents/workflows controlados.</td></tr>
+<tr><td>Docs</td><td>Bundled OpenAI Docs skill actualizado para GPT-5.5, gpt-image-2, upgrade guidance</td><td>Las skills/documentación internas de Codex importan como fuente runtime.</td><td>Mantener Codex actualizado y revisar bundled docs.</td></tr>
+</table>
+<h3>Cambios merged hoy en Codex</h3>
+<p>PRs mergeados el 2026-05-01 que conviene seguir:</p>
+<ul>
+<li>#20610 chore: improve remember prompt</li>
+<li>#20606 feat: seed ad-hoc memory extension instructions</li>
+<li>#20602 feat: ad-hoc instructions</li>
+<li>#20600 chore: allow memories edition</li>
+<li>#20560 feat: Track local paths for shared plugins</li>
+<li>#20558 Format multi-day goal durations in the TUI</li>
+<li>#20522 Alias codex_hooks feature as hooks</li>
+<li>#20341 app-server: switch remote control to protocol v3 segmentation</li>
+<li>#20336 execpolicy: unwrap PowerShell -Command wrappers on Windows</li>
+</ul>
+<p>**Insight:** Codex está invirtiendo hoy en memoria editable/ad-hoc instructions, plugins compartidos, goals largos y protocol/app-server. Eso sugiere que los mejores workflows pronto serán persistentes y cross-surface, no sesiones descartables.</p>
+<h3>Issues abiertos de hoy: riesgos/gotchas</h3>
+<p>Issues activos observados hoy:</p>
+<ul>
+<li>/goal puede fallar en TUI: issue #20598 “Failed to set thread goal”.</li>
+<li>Shift+Enter en macOS reportado roto en 0.128.0: issue #20607.</li>
+<li>Background terminal commands pueden colgar en sandbox: issue #20611.</li>
+<li>MCP schema conversion puede degradar oneOf(object) a string[]: issue #20604.</li>
+<li>Hooks no siempre cubren built-in image generation: issue #20616.</li>
+<li>Codex app remote SSH en macOS remoto puede fallar por chmod --: issue #20617.</li>
+<li>Update podría remover “Commit Instructions”: issue #20615.</li>
+</ul>
+<p>**Tip:** si usas Codex 0.128.0 en producción, fija versión y monitorea issues antes de activar workflows de goals/sandbox/hooks para repos críticos.</p>
+<h3>Codex docs: mapa actual</h3>
+<p>developers.openai.com/codex/llms.txt expone una arquitectura amplia:</p>
+<ul>
+<li>App: commands, automations, worktrees, local environments, in-app browser, computer use, Windows.</li>
+<li>CLI: features, reference, slash commands, non-interactive mode.</li>
+<li>IDE: features, commands, slash commands, settings.</li>
+<li>Cloud: environments, internet access.</li>
+<li>Customization: AGENTS.md, skills, MCP, subagents, hooks, memories/Chronicle.</li>
+<li>Integrations: GitHub review, Linear, Slack, GitHub Action.</li>
+<li>App-server: embedding Codex into products.</li>
+<li>Security: sandboxing, approvals, cyber safety, managed config.</li>
+</ul>
+<p>**Framework mental:** Codex es CLI + App + IDE + Cloud + app-server + docs/skills/memory. Diseña flujos que puedan moverse entre esas superficies.</p>
+<h2>Tips &amp; tricks accionables de hoy</h2>
+<p>1. **Claude: latest vs stable.** latest es 2.1.126 y stable 2.1.118. Para exploración usa latest; para equipo productivo usa stable o pin explícito.</p>
+<p>2. **Claude: skills para procedimientos.** Si un bloque en CLAUDE.md parece checklist o playbook, muévelo a skill para carga bajo demanda y menor coste de contexto.</p>
+<p>3. **Claude: hooks como guardrails.** Implementa bloqueo determinístico en PreToolUse y validación en PostToolUse en vez de confiar en prompts de seguridad.</p>
+<p>4. **Codex: migra de --full-auto a perfiles.** El release 0.128.0 depreca --full-auto y empuja permission profiles explícitos.</p>
+<p>5. **Codex: prueba /goal, pero con cautela.** Es la novedad más fuerte, pero hay issues abiertos de TUI. Úsalo primero en repos no críticos.</p>
+<p>6. **Codex: aprovecha codex update.** Ahora hay comando oficial de actualización en CLI; valida antes con version pin si trabajas en equipos.</p>
+<p>7. **Ambos: versiona instrucciones.** Claude: CLAUDE.md, .claude/skills, hooks. Codex: AGENTS.md, config/requirements, skills/hooks. No dejes el “saber hacer” solo en chats.</p>
+<p>8. **Ambos: worktrees paralelos.** Usa un worktree por issue/PR para evitar conflictos y facilitar review/rollback.</p>
+<p>9. **Ambos: revisiones multi-agente.** Ejecuta implementación y review en sesiones separadas; no le pidas al mismo agente que sea juez único de su propio cambio.</p>
+<p>10. **Ambos: observa contexto/coste.** Claude tiene /context, /usage, /compact; Codex está mejorando memoria, goals y tracing. Diseña checkpoints.</p>
+<h2>Workflows recomendados</h2>
+<h3>Workflow 1 — Feature mediana con Claude Code</h3>
+<p>1. claude -p &quot;Analiza el repo y propón plan&quot; --max-turns 5</p>
+<p>2. Revisar plan humano.</p>
+<p>3. Sesión interactiva o worktree: /plan, implementar.</p>
+<p>4. Hooks ejecutan formatter/tests.</p>
+<p>5. /review o /security-review.</p>
+<p>6. PR con resumen y riesgos.</p>
+<h3>Workflow 2 — Issue paralelo con Codex</h3>
+<p>1. Crear worktree por issue.</p>
+<p>2. codex exec o Codex App con permisos explícitos.</p>
+<p>3. Usar /goal si la tarea es multi-día o persistente.</p>
+<p>4. Revisar diffs y tests.</p>
+<p>5. Evitar --full-auto; preferir perfiles/sandbox explícitos.</p>
+<h3>Workflow 3 — Base reusable de equipo</h3>
+<p>1. Crear CLAUDE.md y AGENTS.md consistentes.</p>
+<p>2. Extraer procedimientos a skills: deploy, migration, security-review, performance-audit.</p>
+<p>3. Añadir hooks de seguridad y calidad.</p>
+<p>4. Configurar MCP mínimo necesario por proyecto.</p>
+<p>5. Crear “golden workflows” documentados: bugfix, feature, PR review, incident response.</p>
+<h2>Frameworks / conceptos a seguir</h2>
+<ul>
+<li>**Claude Agent SDK:** para construir agentes internos con tools, MCP, permissions, hooks, skills, subagents, sessions y OpenTelemetry.</li>
+<li>**Codex app-server:** para embeber Codex en productos o flujos propios.</li>
+<li>**MCP:** capa común de herramientas externas; cuidar límites de output, schemas y permisos.</li>
+<li>**Skills / Agent Skills:** estándar emergente para empaquetar procedimientos reusables; Claude y Codex están convergiendo en esta dirección.</li>
+<li>**Hooks:** automatización determinística alrededor del agente.</li>
+<li>**Worktrees:** aislamiento git como primitive básica para agentes paralelos.</li>
+<li>**Memory/instructions:** Claude con CLAUDE.md/auto memory; Codex con AGENTS.md/memories/ad-hoc instructions.</li>
+</ul>
+<h2>Fuentes</h2>
+<ul>
+<li>Claude Code docs index: <a href="https://code.claude.com/docs/llms.txt">https://code.claude.com/docs/llms.txt</a></li>
+<li>Claude Code overview: <a href="https://docs.anthropic.com/en/docs/claude-code/overview">https://docs.anthropic.com/en/docs/claude-code/overview</a></li>
+<li>Claude Code CLI reference: <a href="https://docs.anthropic.com/en/docs/claude-code/cli-reference">https://docs.anthropic.com/en/docs/claude-code/cli-reference</a></li>
+<li>Claude Code skills: <a href="https://docs.anthropic.com/en/docs/claude-code/skills">https://docs.anthropic.com/en/docs/claude-code/skills</a></li>
+<li>Claude Code hooks reference: <a href="https://docs.anthropic.com/en/docs/claude-code/hooks">https://docs.anthropic.com/en/docs/claude-code/hooks</a></li>
+<li>npm Claude Code: <a href="https://www.npmjs.com/package/@anthropic-ai/claude-code">https://www.npmjs.com/package/@anthropic-ai/claude-code</a></li>
+<li>OpenAI Codex docs index: <a href="https://developers.openai.com/codex/llms.txt">https://developers.openai.com/codex/llms.txt</a></li>
+<li>OpenAI Codex docs: <a href="https://developers.openai.com/codex">https://developers.openai.com/codex</a></li>
+<li>OpenAI Codex GitHub: <a href="https://github.com/openai/codex">https://github.com/openai/codex</a></li>
+<li>Codex release 0.128.0: <a href="https://github.com/openai/codex/releases/tag/rust-v0.128.0">https://github.com/openai/codex/releases/tag/rust-v0.128.0</a></li>
+<li>Codex alpha 0.129.0-alpha.2: <a href="https://github.com/openai/codex/releases/tag/rust-v0.129.0-alpha.2">https://github.com/openai/codex/releases/tag/rust-v0.129.0-alpha.2</a></li>
+<li>npm Codex: <a href="https://www.npmjs.com/package/@openai/codex">https://www.npmjs.com/package/@openai/codex</a></li>
+</ul>
+</body></html>

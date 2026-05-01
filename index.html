@@ -11,130 +11,78 @@
     main { max-width:1180px; margin:0 auto; padding:46px 20px 86px; }
     h1 { margin:0 0 12px; font-size:clamp(2.3rem, 6vw, 5.4rem); line-height:.92; letter-spacing:-.065em; }
     h2 { margin:34px 0 14px; font-size:1.55rem; letter-spacing:-.03em; }
-    h3 { margin:0 0 10px; }
-    p { margin:0 0 13px; }
-    a { color:var(--cyan); text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    .lede { max-width:860px; color:var(--muted); font-size:1.08rem; }
+    h3 { margin:0 0 10px; } p { margin:0 0 13px; }
+    a { color:var(--cyan); text-decoration:none; } a:hover { text-decoration:underline; }
+    .lede { max-width:900px; color:var(--muted); font-size:1.08rem; }
     .badges { display:flex; flex-wrap:wrap; gap:10px; margin:22px 0; }
     .badge { border:1px solid var(--line); background:rgba(16,23,37,.75); color:var(--muted); padding:7px 11px; border-radius:999px; font-size:.88rem; }
     .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); gap:16px; }
     .card { border:1px solid var(--line); border-radius:20px; background:linear-gradient(180deg, rgba(16,23,37,.94), rgba(12,17,29,.94)); padding:19px; box-shadow:0 16px 36px rgba(0,0,0,.24); }
     .card.accent { border-color:rgba(103,232,249,.45); }
     .kicker { color:var(--violet); font-weight:750; letter-spacing:.08em; text-transform:uppercase; font-size:.75rem; }
-    .metric { display:flex; justify-content:space-between; gap:12px; border-top:1px solid var(--line); padding-top:10px; margin-top:10px; color:var(--muted); }
-    .metric strong { color:var(--text); }
-    ul { margin:10px 0 0; padding-left:18px; }
-    li { margin-bottom:8px; }
+    ul { margin:10px 0 0; padding-left:18px; } li { margin-bottom:8px; }
     .pill { display:inline-block; padding:2px 8px; border-radius:999px; background:rgba(103,232,249,.1); color:var(--cyan); border:1px solid rgba(103,232,249,.22); font-size:.82rem; margin:2px 4px 2px 0; }
-    .two { display:grid; grid-template-columns:1.1fr .9fr; gap:16px; }
-    @media (max-width: 850px) { .two { grid-template-columns:1fr; } }
-    table { width:100%; border-collapse:collapse; overflow:hidden; border-radius:14px; font-size:.94rem; }
-    th, td { border-bottom:1px solid var(--line); padding:10px 9px; vertical-align:top; }
-    th { color:var(--muted); text-align:left; font-weight:650; }
-    tr:last-child td { border-bottom:0; }
+    .two { display:grid; grid-template-columns:1.1fr .9fr; gap:16px; } @media (max-width:850px){.two{grid-template-columns:1fr}}
+    table { width:100%; border-collapse:collapse; overflow:hidden; border-radius:14px; font-size:.94rem; } th,td{border-bottom:1px solid var(--line);padding:10px 9px;vertical-align:top} th{color:var(--muted);text-align:left;font-weight:650} tr:last-child td{border-bottom:0}
     .note { border-left:3px solid var(--violet); background:rgba(196,181,253,.08); padding:13px 16px; border-radius:12px; color:var(--muted); }
-    .fresh { color:var(--green); font-weight:800; }
-    .watch { color:var(--amber); font-weight:800; }
+    .fresh { color:var(--green); font-weight:800; } .watch { color:var(--amber); font-weight:800; } .risk { color:var(--red); font-weight:800; }
     footer { margin-top:42px; border-top:1px solid var(--line); padding-top:18px; color:var(--muted); font-size:.9rem; }
     code { background:rgba(103,232,249,.12); padding:2px 6px; border-radius:6px; }
   </style>
 </head>
-<body>
-<main>
+<body><main>
   <header>
-    <div class="badges">
-      <span class="badge">Daily agentic coding research</span>
-      <span class="badge">Claude Code + OpenAI Codex</span>
-      <span class="badge">Tips, workflows, slash commands, skills, news</span>
-      <span class="badge">Histórico acumulativo</span>
-    </div>
+    <div class="badges"><span class="badge">Actualizado: 2026-05-01 10:03 -05</span><span class="badge">Claude Code + OpenAI Codex</span><span class="badge">Tips, workflows, slash commands, skills, news</span><span class="badge">Histórico acumulativo</span></div>
     <h1>Agentic Coding<br />Intel</h1>
-    <p class="lede">Radar diario de avances recientes en Claude Code y OpenAI Codex: releases, comandos, workflows, frameworks, skills, MCP, hooks, patrones de productividad y noticias relevantes para programar con agentes.</p>
+    <p class="lede">Radar de avances recientes en Claude Code y OpenAI Codex: releases, comandos, workflows, frameworks, skills, MCP, hooks, patrones de productividad, noticias y gotchas verificados en fuentes oficiales.</p>
   </header>
 
-  <section class="note">
-    <strong>Estado:</strong> página inicial publicada el 2026-05-01. A partir de mañana a las 09:00 se actualizará automáticamente y cada edición quedará archivada en <code>/archive/YYYY-MM-DD.html</code> y <code>/archive/YYYY-MM-DD.md</code>.
-  </section>
+  <section class="note"><strong>Snapshot de hoy:</strong> Claude Code está consolidado como plataforma multi-superficie con Agent SDK, skills/hooks/plugins/subagents/MCP y weekly “What's New”. Codex acaba de sacar 0.128.0 y hoy publicó 0.129.0-alpha.2, con foco en `/goal`, app-server, permission profiles, plugins, hooks, MultiAgentV2 y memoria.</section>
 
-  <section>
-    <h2>Último snapshot</h2>
-    <div class="grid">
-      <article class="card accent">
-        <div class="kicker">Claude Code</div>
-        <h3>v2.1.126 en npm</h3>
-        <p>Paquete <code>@anthropic-ai/claude-code</code>. Dist-tags observados: <code>latest: 2.1.126</code>, <code>next: 2.1.126</code>, <code>stable: 2.1.118</code>.</p>
-        <ul>
-          <li><span class="fresh">A monitorear:</span> cambios en CLI, slash commands, hooks, skills, subagents, MCP, permisos y modos de trabajo.</li>
-          <li><span class="watch">Tip:</span> usar <code>claude -p</code> para tareas automatizables y tmux para sesiones interactivas multi-turno.</li>
-        </ul>
-      </article>
-      <article class="card accent">
-        <div class="kicker">OpenAI Codex</div>
-        <h3>v0.128.0 latest; v0.129.0-alpha.2 alpha</h3>
-        <p>Paquete <code>@openai/codex</code>. Release 0.128.0 reporta workflows <code>/goal</code>, <code>codex update</code>, keymaps configurables, mejoras de plan-mode y status/title edits.</p>
-        <ul>
-          <li><span class="fresh">A monitorear:</span> madurez de <code>/goal</code>, perfiles de permisos, sandbox, TUI, app-server APIs.</li>
-          <li><span class="watch">Tip:</span> Codex requiere repo git; usar <code>codex exec --full-auto</code> para one-shots controlados.</li>
-        </ul>
-      </article>
-    </div>
-  </section>
+  <section><h2>Último snapshot</h2><div class="grid">
+    <article class="card accent"><div class="kicker">Claude Code</div><h3>2.1.126 latest / 2.1.118 stable</h3><p>npm <code>@anthropic-ai/claude-code</code>: <code>latest</code> y <code>next</code> en 2.1.126; <code>stable</code> en 2.1.118. Docs oficiales listan CLI, IDE, desktop, web, Chrome, Agent SDK, skills, hooks, MCP, plugins, subagents, routines y remote control.</p><ul><li><span class="fresh">Insight:</span> usar Claude Code como plataforma, no solo CLI.</li><li><span class="watch">Tip:</span> skills para procedimientos; <code>CLAUDE.md</code> para hechos estables.</li></ul></article>
+    <article class="card accent"><div class="kicker">OpenAI Codex</div><h3>0.128.0 latest / 0.129.0-alpha.2 alpha</h3><p>Release 0.128.0 trae persisted <code>/goal</code>, <code>codex update</code>, keymaps, plan-mode nudges, permission profiles, plugins, hooks, external agent import, app-server y MultiAgentV2.</p><ul><li><span class="fresh">Insight:</span> Codex se mueve hacia goals persistentes y perfiles explícitos.</li><li><span class="risk">Gotcha:</span> <code>--full-auto</code> aparece deprecado en changelog; migrar a permission profiles.</li></ul></article>
+    <article class="card"><div class="kicker">Ecosistema</div><h3>Skills + hooks + MCP como stack común</h3><p>Ambas herramientas convergen en instrucciones versionadas, skills reutilizables, MCP, hooks y subagents. La ventaja está en diseñar workflows repetibles y auditables.</p><ul><li>Versiona <code>CLAUDE.md</code> / <code>AGENTS.md</code>.</li><li>Usa hooks para seguridad y calidad.</li><li>Un worktree por agente/tarea.</li></ul></article>
+  </div></section>
 
-  <section class="two">
-    <div>
-      <h2>Radar de workflows</h2>
-      <div class="card">
-        <table>
-          <thead><tr><th>Workflow</th><th>Útil para</th><th>Patrón</th></tr></thead>
-          <tbody>
-            <tr><td>Print / exec one-shot</td><td>Bug fixes, reviews, docs</td><td><code>claude -p</code> o <code>codex exec</code> con límites claros.</td></tr>
-            <tr><td>Plan → implement → review</td><td>Cambios medianos</td><td>Separar planeación, ejecución y auditoría en agentes/sesiones distintas.</td></tr>
-            <tr><td>Worktrees paralelos</td><td>Issues independientes</td><td>Un worktree por tarea; merge/PR al final.</td></tr>
-            <tr><td>MCP + skills/hooks</td><td>Automatización repetible</td><td>Herramientas externas + reglas de proyecto + comandos custom.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div>
-      <h2>Temas diarios</h2>
-      <div class="card">
-        <span class="pill">news</span><span class="pill">release notes</span><span class="pill">slash commands</span><span class="pill">skills</span><span class="pill">MCP</span><span class="pill">hooks</span><span class="pill">frameworks</span><span class="pill">prompting</span><span class="pill">workflows</span><span class="pill">security</span>
-        <ul>
-          <li>Qué cambió y por qué importa.</li>
-          <li>Comandos concretos para probar.</li>
-          <li>Tips/tricks nuevos con ejemplos.</li>
-          <li>Frameworks o repos emergentes para agentic coding.</li>
-          <li>Histórico con enlaces y fuentes.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+  <section><h2>Hallazgos verificados</h2><div class="card"><table><thead><tr><th>Área</th><th>Hallazgo</th><th>Impacto práctico</th></tr></thead><tbody>
+    <tr><td>Claude Skills</td><td>Custom commands convergen con skills; <code>.claude/commands/deploy.md</code> y <code>.claude/skills/deploy/SKILL.md</code> pueden exponer <code>/deploy</code>.</td><td>Mover playbooks largos a skills reduce contexto y mejora reutilización.</td></tr>
+    <tr><td>Claude Hooks</td><td>Hooks cubren ciclo amplio: prompt, permisos, tools, subagents, tasks, file changes, compaction, session end.</td><td>Implementar guardrails determinísticos y validación automática.</td></tr>
+    <tr><td>Claude Agent SDK</td><td>SDK con tools, MCP, permissions, plugins, skills, subagents, structured outputs, streaming, sessions, checkpointing, OpenTelemetry.</td><td>Construir agentes internos con capacidades del CLI.</td></tr>
+    <tr><td>Codex Goals</td><td><code>/goal</code> persistente con app-server APIs, model tools, runtime continuation y TUI controls.</td><td>Tareas largas/multi-día con pausa/reanudación.</td></tr>
+    <tr><td>Codex Plugins</td><td>Marketplace install, remote caching, uninstall remoto, hooks empaquetados, import de configs externas.</td><td>Plugins como unidad de distribución de workflows.</td></tr>
+    <tr><td>Codex Permisos</td><td>Perfiles built-in, sandbox CLI profile selection, cwd controls y metadata de active profile.</td><td>Más seguro que auto-aprobar; mejor para equipos.</td></tr>
+    <tr><td>Codex PRs hoy</td><td>Ad-hoc instructions, memoria editable, shared plugin paths, multi-day goal durations, hooks alias.</td><td>Codex está reforzando persistencia, memoria y extensibilidad.</td></tr>
+  </tbody></table></div></section>
 
-  <section>
-    <h2>Histórico</h2>
-    <div class="card">
-      <ul id="archive-list">
-        <li><a href="archive/2026-05-01.html">2026-05-01 — Página inicial y baseline</a></li>
-      </ul>
-    </div>
-  </section>
+  <section class="two"><div><h2>Top tips de hoy</h2><div class="card"><ul>
+    <li><strong>Pin de canal:</strong> Claude latest para exploración, stable para equipos; Codex alpha solo pruebas.</li>
+    <li><strong>Procedimientos a skills:</strong> deploys, migrations, reviews, incident response y performance audits.</li>
+    <li><strong>Permisos explícitos:</strong> Codex 0.128 empuja permission profiles; evita depender de <code>--full-auto</code>.</li>
+    <li><strong>Hooks como políticas:</strong> bloquear comandos peligrosos, correr formatters/tests, capturar contexto antes de compactar.</li>
+    <li><strong>Review independiente:</strong> que un agente implemente y otro revise. Evita juez único.</li>
+    <li><strong>Worktrees paralelos:</strong> una tarea por worktree; merge/PR al final.</li>
+  </ul></div></div><div><h2>Gotchas actuales</h2><div class="card"><ul>
+    <li>Codex 0.128 tiene reportes abiertos sobre <code>/goal</code>, Shift+Enter macOS, sandbox background commands, MCP schema conversion y hooks de image generation.</li>
+    <li>Claude Code tiene muchos canales/superficies: verifica si el comando aplica a CLI, desktop, web o SDK.</li>
+    <li>MCP aumenta poder y riesgo: limita output, scopes y permisos por servidor.</li>
+    <li>Skills no deben ser dumps: frontmatter + pasos claros + archivos de soporte.</li>
+  </ul></div></div></section>
 
-  <section>
-    <h2>Fuentes iniciales</h2>
-    <div class="card">
-      <ul>
-        <li><a href="https://www.npmjs.com/package/@anthropic-ai/claude-code">npm: @anthropic-ai/claude-code</a></li>
-        <li><a href="https://www.npmjs.com/package/@openai/codex">npm: @openai/codex</a></li>
-        <li><a href="https://github.com/openai/codex/releases">OpenAI Codex releases</a></li>
-        <li><a href="https://docs.anthropic.com/en/docs/claude-code">Claude Code docs</a></li>
-      </ul>
-    </div>
-  </section>
+  <section><h2>Workflows recomendados</h2><div class="card"><table><thead><tr><th>Workflow</th><th>Patrón</th><th>Cuándo usar</th></tr></thead><tbody>
+    <tr><td>Feature mediana Claude</td><td><code>claude -p</code> para plan → worktree interactivo → hooks/tests → <code>/review</code>.</td><td>Refactors, features, bugfixes con revisión.</td></tr>
+    <tr><td>Issue paralelo Codex</td><td>Worktree por issue → <code>codex exec</code> o App → permission profile → PR.</td><td>Backlog con issues independientes.</td></tr>
+    <tr><td>Goal multi-día</td><td>Codex <code>/goal</code> o Claude routines/scheduled tasks con checkpoints.</td><td>Tareas largas, audits, migraciones.</td></tr>
+    <tr><td>Stack reusable de equipo</td><td><code>CLAUDE.md</code> + <code>AGENTS.md</code> + skills + hooks + MCP mínimo + golden workflows.</td><td>Equipos que quieren estandarizar agentic coding.</td></tr>
+  </tbody></table></div></section>
 
-  <footer>
-    Generado por Hermes. Este sitio es un cuaderno público de investigación técnica; verifica siempre comandos y releases antes de aplicarlos en proyectos críticos.
-  </footer>
-</main>
-</body>
-</html>
+  <section><h2>Frameworks / conceptos a seguir</h2><div class="card"><span class="pill">Claude Agent SDK</span><span class="pill">Codex app-server</span><span class="pill">MCP</span><span class="pill">Agent Skills</span><span class="pill">Hooks</span><span class="pill">Subagents</span><span class="pill">Worktrees</span><span class="pill">AGENTS.md</span><span class="pill">CLAUDE.md</span><span class="pill">Routines / Automations</span><p>El patrón emergente: instrucciones versionadas + permisos explícitos + herramientas externas acotadas + memoria controlada + aislamiento git.</p></div></section>
+
+  <section><h2>Histórico</h2><div class="card"><ul id="archive-list"><li><a href="archive/2026-05-01-full.html">2026-05-01 — Radar completo de hoy</a></li><li><a href="archive/2026-05-01.html">2026-05-01 — Página inicial y baseline</a></li></ul></div></section>
+
+  <section><h2>Fuentes principales</h2><div class="card"><ul>
+    <li><a href="https://code.claude.com/docs/llms.txt">Claude Code docs index / llms.txt</a></li><li><a href="https://docs.anthropic.com/en/docs/claude-code/cli-reference">Claude Code CLI reference</a></li><li><a href="https://docs.anthropic.com/en/docs/claude-code/skills">Claude Code skills</a></li><li><a href="https://docs.anthropic.com/en/docs/claude-code/hooks">Claude Code hooks</a></li><li><a href="https://www.npmjs.com/package/@anthropic-ai/claude-code">npm Claude Code</a></li><li><a href="https://developers.openai.com/codex/llms.txt">OpenAI Codex docs index</a></li><li><a href="https://github.com/openai/codex/releases/tag/rust-v0.128.0">Codex 0.128.0 release</a></li><li><a href="https://github.com/openai/codex/releases/tag/rust-v0.129.0-alpha.2">Codex 0.129.0-alpha.2 release</a></li><li><a href="https://www.npmjs.com/package/@openai/codex">npm Codex</a></li>
+  </ul></div></section>
+
+  <footer>Generado por Hermes. Este sitio es un cuaderno público de investigación técnica; verifica siempre comandos y releases antes de aplicarlos en proyectos críticos.</footer>
+</main></body></html>
